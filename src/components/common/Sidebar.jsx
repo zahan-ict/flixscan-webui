@@ -126,8 +126,8 @@ const Sidebar = ({ children }) => {
             icon: <CorporateFareIcon />
         },
         {
-            path: "/labels",
-            name: "Labels",
+            path: "/store",
+            name: "Store",
             icon: <Labels />
         },
         {
