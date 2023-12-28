@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Card, CardContent, Typography, Divider,LinearProgress } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Card, CardContent, Typography, Divider, LinearProgress } from '@mui/material';
 import { Delete, DriveFileRenameOutline, Add } from '@mui/icons-material';
 
 import axios from 'axios';
@@ -31,7 +31,6 @@ const Organization = () => {
 
   // Insert And Update Data 
   const handleSave = async () => {
-    console.log(selectedRow);
     try {
       if (selectedRow != null) {
         // Update existing row
@@ -64,7 +63,6 @@ const Organization = () => {
     // }
     try {
       const idToDelete = rowToDeleteId;
-
       if (idToDelete !== null) {
         const updatedRows = rows.filter((row) => row.id !== idToDelete);
         await axios.delete(`${apiUrl}/organizations/${idToDelete}`);
@@ -139,13 +137,13 @@ const Organization = () => {
           </Typography>
           <Divider />
           <div style={{ height: 'auto', width: '100%' }}>
-            <Button onClick={() => openDialog(null)} startIcon={<Add />} className="lowercaseText" variant="contained" color="error" sx={{ marginY: 3 }}>Add New</Button>
-            <DataGrid  rows={rows} columns={columns} initialState={{
+            <Button onClick={() => openDialog(null)} startIcon={<Add />} className="lowercaseText" variant="contained" color="error" sx={{ marginY: 3 }}>Add New Organination</Button>
+            <DataGrid rows={rows} columns={columns} initialState={{
               pagination: { paginationModel: { pageSize: 50 } },
             }}
-            pageSizeOptions={[50, 75, 100]}
-            checkboxSelection
-            disableSelectionOnClick
+              pageSizeOptions={[50, 75, 100]}
+              checkboxSelection
+              disableSelectionOnClick
             />
           </div>
         </CardContent >
@@ -232,7 +230,7 @@ const Organization = () => {
       <Dialog open={isDeleteDialogOpen} onClose={closeDeleteDialog}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
-          Are you sure you want to delete this row?
+          Are you sure you want to delete this organization?
         </DialogContent>
         <DialogActions>
           <Button onClick={closeDeleteDialog} color="primary">
@@ -243,8 +241,6 @@ const Organization = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-
     </div>
   );
 };
