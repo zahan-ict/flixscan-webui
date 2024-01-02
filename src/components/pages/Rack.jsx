@@ -18,7 +18,7 @@ const Rack = () => {
     // View Data
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/stores`);
+        const response = await axios.get(`${apiUrl}/racks`);
         setRows(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -36,12 +36,12 @@ const Rack = () => {
         const updatedRows = rows.map((row) =>
           row.id === selectedRow.id ? { ...row, ...formData } : row,
         );
-        await axios.put(`${apiUrl}/stores/${formData.id}`, formData);
+        await axios.put(`${apiUrl}/racks/${formData.id}`, formData);
         setRows(updatedRows);
       } else {
         // Create new row
         const newRow = { id: Date.now(), ...formData };
-        const response = await axios.post(`${apiUrl}/stores/`, formData);
+        const response = await axios.post(`${apiUrl}/racks/`, formData);
         const newId = response.data.id;
         newRow.id = newId;
         setRows([...rows, newRow]);
@@ -65,7 +65,7 @@ const Rack = () => {
 
       if (idToDelete !== null) {
         const updatedRows = rows.filter((row) => row.id !== idToDelete);
-        await axios.delete(`${apiUrl}/stores/${idToDelete}`);
+        await axios.delete(`${apiUrl}/racks/${idToDelete}`);
         setRows(updatedRows);
         closeDeleteDialog();
       }
@@ -104,15 +104,13 @@ const Rack = () => {
   };
 
   const columns = [
-    { field: 'storeName', headerName: 'Store Name', flex: 1 },
-    { field: 'storeCode', headerName: 'Store Code', flex: 1 },
-    { field: 'storeCountry', headerName: 'Store Country', flex: 1 },
-    { field: 'storeRegion', headerName: 'Store Region', flex: 1 },
-    { field: 'storeCity', headerName: 'Store City', flex: 1 },
-    { field: 'storePhone', headerName: 'Store Phone', flex: 1 },
-    { field: 'storeEmail', headerName: 'Store Email', flex: 1 },
-    { field: 'epaperCount', headerName: 'Linked Epaper', flex: 1 },
-    { field: 'gatewayCount', headerName: 'Linked Gateway', flex: 1 },
+    { field: 'rackName', headerName: 'Rack Name', flex: 1 },
+    { field: 'rackDetails', headerName: 'Rack Details', flex: 1 },
+    { field: 'rackArea', headerName: 'Rack Area', flex: 1 },
+    { field: 'rackImage', headerName: 'Rack Image', flex: 1 },
+    { field: 'epaperCount', headerName: 'Total Linked Epaper', flex: 1 },
+    { field: 'gatewayCount', headerName: 'Total Linked Gateway', flex: 1 },
+    { field: 'storeId', headerName: 'Store Id', flex: 1 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -162,85 +160,25 @@ const Rack = () => {
           />
         ))} */}
           <TextField
-            name="storeName"
-            label="Store Name"
-            value={formData.storeName || ''}
+            name="rackName"
+            label="Rack Name"
+            value={formData.rackName || ''}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
           <TextField
-            name="storeCode"
-            label="Store Code"
-            value={formData.storeCode || ''}
+            name="rackDetails"
+            label="Rack Details"
+            value={formData.rackDetails || ''}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
           <TextField
-            name="storeCountry"
-            label="Store Country"
-            value={formData.storeCountry || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            name="organizationPhone"
-            label="Organization Phone"
-            value={formData.organizationPhone || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            name="storeRegion"
-            label="Store Region"
-            value={formData.storeRegion || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            name="storeCity"
-            label="Store City"
-            value={formData.storeCity || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            name="storePhone"
-            label="Store Phone"
-            value={formData.storePhone || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            name="storeEmail"
-            label="Store Email"
-            value={formData.storeEmail || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            name="epaperCount"
-            label="Total Linked Epaper"
-            value={formData.epaperCount || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            name="gatewayCount"
-            label="Total Linked Gateway"
-            value={formData.gatewayCount || ''}
+            name="rackArea"
+            label="Rack Area"
+            value={formData.rackArea || ''}
             onChange={handleChange}
             fullWidth
             margin="normal"

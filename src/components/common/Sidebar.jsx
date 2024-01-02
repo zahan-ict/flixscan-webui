@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
@@ -96,8 +95,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-
 const Sidebar = ({ children }) => {
+    const [isLoggedIn, setLoggedIn] = useState(false);
+
+
+
+    const handleLogout = () => {
+        // Set the isLoggedIn state to false and clear local storage on logout
+        setLoggedIn(false);
+        localStorage.removeItem('isLoggedIn');
+        console.log(localStorage.getItem('isLoggedIn', isLoggedIn))
+    };
+
     const [open, setOpen] = React.useState(false);
     const menuItem = [
         {
@@ -169,7 +178,7 @@ const Sidebar = ({ children }) => {
 
                     </Typography>
                     <Button color="inherit"><Person /></Button>
-                    <Button color="inherit"><Logout /></Button>
+                    <Button color="inherit"><Logout onClick={handleLogout }/></Button>
                 </Toolbar>
             </AppBar>
             {/* Open and close sidebar without <Appbar/> in the top. No need fuction  handleDrawerClose and handleDrawerOpen to close or open sidebar */}
@@ -185,9 +194,9 @@ const Sidebar = ({ children }) => {
                         menuItem.map((item, index) => (
                             <Link style={{ textDecoration: 'none', color: '#000' }} to={item.path} key={index} >
                                 <ListItem key={item.name} disablePadding sx={{ display: 'block' }}>
-                                    <ListItemButton sx={{ minHeight: 55, justifyContent: open ? 'initial' : 'center', px: 2.5,flexDirection: open ? 'row':'column'  }}>
+                                    <ListItemButton sx={{ minHeight: 55, justifyContent: open ? 'initial' : 'center', px: 2.5, flexDirection: open ? 'row' : 'column' }}>
                                         <ListItemIcon sx={{ minWidth: 0, mr: open ? 2 : 'auto', justifyContent: 'center', fontSize: '.712rem' }} >{item.icon} </ListItemIcon>
-                                        <Typography  sx={{ fontSize: open ? '15px' :'8px' }}>{item.name} </Typography>
+                                        <Typography sx={{ fontSize: open ? '15px' : '8px' }}>{item.name} </Typography>
                                     </ListItemButton>
                                 </ListItem>
                             </Link>

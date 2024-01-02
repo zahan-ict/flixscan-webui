@@ -186,15 +186,6 @@ const Store = () => {
             margin="normal"
           />
           <TextField
-            name="organizationPhone"
-            label="Organization Phone"
-            value={formData.organizationPhone || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
             name="storeRegion"
             label="Store Region"
             value={formData.storeRegion || ''}
@@ -202,7 +193,6 @@ const Store = () => {
             fullWidth
             margin="normal"
           />
-
           <TextField
             name="storeCity"
             label="Store City"
@@ -211,7 +201,6 @@ const Store = () => {
             fullWidth
             margin="normal"
           />
-
           <TextField
             name="storePhone"
             label="Store Phone"
@@ -236,7 +225,6 @@ const Store = () => {
             fullWidth
             margin="normal"
           />
-
           <TextField
             name="gatewayCount"
             label="Total Linked Gateway"
