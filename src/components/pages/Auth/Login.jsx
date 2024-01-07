@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, NavLink } from 'react-router-dom';
+import React from 'react'
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import { useTheme, createTheme, ThemeProvider } from '@mui/material/styles';
+import { NavLink } from 'react-router-dom';
+import { Divider, Stack, Typography } from '@mui/material';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://flixscan.de/">
-        Flixscan Inc
+      <Link color="inherit" href="https://mui.com/">
+        Flixscan
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -32,9 +32,8 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-// export default function SignInSide() {
+// export default function SignIn() {
 //   const handleSubmit = (event) => {
-   
 //     event.preventDefault();
 //     const data = new FormData(event.currentTarget);
 //     console.log({
@@ -42,113 +41,105 @@ const defaultTheme = createTheme();
 //       password: data.get('password'),
 //     });
 //   };
+const Login = ({ onLogin }) => {
+  const theme = useTheme();
 
-  const Login = ({ onLogin }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-  
-    const handleLogin = () => {
-      // Perform authentication logic, e.g., API call, validation, etc.
-      // If authentication is successful, call the onLogin prop.
-      onLogin();
-    };
-
-  //  const handleSubmit = (event) => {
-   
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   });
+  const handleLogin = () => {
+    // Perform authentication logic, e.g., API call, validation, etc.
+    // If authentication is successful, call the onLogin prop.
+    onLogin();
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
+        <Box
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button type="submit" fullWidth variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <Card sx={{ minWidth: 375 }}>
+            <CardContent>
+              <Stack alignItems="center" justifyContent="center" spacing={3}>
+                <Avatar  />
+                <Typography variant='h5' fontWeight={"bold"}>
                 Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-               
-                  <Link href="/" variant="body2">
-                    Forgot password?
-                  </Link>
+                </Typography>
+             
+                <Typography color={theme.palette.secondary.main} variant='h5' fontWeight={"bold"}>
+                  Hi, Welcome Back
+                </Typography>
+
+                <Typography variant="caption" fontSize="16px" textAlign={'center'}>
+                  Enter your credentials to continue
+                </Typography>
+              </Stack>
+              <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+
+                <Grid container>
+                  <Grid item xs>
+                    <FormControlLabel
+                      control={<Checkbox value="remember" color="primary" />}
+                      label="Remember me"
+                    />
+                  </Grid>
+                  <Grid item>
+                    <NavLink to={'/register'}>
+                      Forgot Password?
+                    </NavLink>
+                  </Grid>
                 </Grid>
-                <Grid item>
-            
-                <NavLink to={"/register"}>
-                  {"Don't have an account? Sign Up"}
-                </NavLink>
-            
-              
-                 
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
-            </Box>
-          </Box>
-        </Grid>
-      </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+              >
+                  Sign In
+                </Button>
+                <Divider />
+                <Box
+                  sx={{
+                    marginTop: 3,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <NavLink to={'/register'} sx={{ textDecoration: 'none' }} >
+                    {"Don't have an account?"}
+                  </NavLink>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
     </ThemeProvider>
   );
 }
-export default Login;
+export default Login
