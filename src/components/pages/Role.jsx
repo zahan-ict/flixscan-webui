@@ -139,7 +139,7 @@ const Role = () => {
           </Typography>
           <Divider />
           <div style={{ height: 'auto', width: '100%' }}>
-            <Button onClick={() => openDialog(null)} startIcon={<Add />} className="lowercaseText" variant="contained" color="error" sx={{ marginY: 3 }}>Add New Store</Button>
+            <Button onClick={() => openDialog(null)} startIcon={<Add />} className="lowercaseText" variant="contained" color="error" sx={{ marginY: 3 }}>Add New Role</Button>
             <DataGrid rows={rows} columns={columns} initialState={{
               pagination: { paginationModel: { pageSize: 50 } },
             }}
@@ -152,7 +152,7 @@ const Role = () => {
       </Card>
 
       <Dialog open={isDialogOpen} onClose={closeDialog}>
-        <DialogTitle>{selectedRow ? 'Edit Store' : 'Add New Store'}</DialogTitle>
+        <DialogTitle>{selectedRow ? 'Edit Role' : 'Add New Role'}</DialogTitle>
         <DialogContent>
           {/* {Object.keys(formData).map((field) => (
            <TextField id="outlined-basic" variant="outlined"   key={field} fullWidth label={field} name={field} 
@@ -193,7 +193,6 @@ const Role = () => {
             fullWidth
             margin="normal"
           />
-
           <TextField
             name="storeRegion"
             label="Store Region"
@@ -202,7 +201,6 @@ const Role = () => {
             fullWidth
             margin="normal"
           />
-
           <TextField
             name="storeCity"
             label="Store City"
@@ -211,7 +209,6 @@ const Role = () => {
             fullWidth
             margin="normal"
           />
-
           <TextField
             name="storePhone"
             label="Store Phone"
@@ -236,7 +233,6 @@ const Role = () => {
             fullWidth
             margin="normal"
           />
-
           <TextField
             name="gatewayCount"
             label="Total Linked Gateway"
@@ -271,5 +267,4 @@ const Role = () => {
     </div>
   );
 };
-
 export default Role

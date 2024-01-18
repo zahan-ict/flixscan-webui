@@ -18,7 +18,7 @@ const User = () => {
     // View Data
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/stores`);
+        const response = await axios.get(`${apiUrl}/users`);
         setRows(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -36,12 +36,12 @@ const User = () => {
         const updatedRows = rows.map((row) =>
           row.id === selectedRow.id ? { ...row, ...formData } : row,
         );
-        await axios.put(`${apiUrl}/stores/${formData.id}`, formData);
+        await axios.put(`${apiUrl}/users/${formData.id}`, formData);
         setRows(updatedRows);
       } else {
         // Create new row
         const newRow = { id: Date.now(), ...formData };
-        const response = await axios.post(`${apiUrl}/stores/`, formData);
+        const response = await axios.post(`${apiUrl}/users/`, formData);
         const newId = response.data.id;
         newRow.id = newId;
         setRows([...rows, newRow]);
@@ -62,10 +62,9 @@ const User = () => {
     // }
     try {
       const idToDelete = rowToDeleteId;
-
       if (idToDelete !== null) {
         const updatedRows = rows.filter((row) => row.id !== idToDelete);
-        await axios.delete(`${apiUrl}/stores/${idToDelete}`);
+        await axios.delete(`${apiUrl}/users/${idToDelete}`);
         setRows(updatedRows);
         closeDeleteDialog();
       }
@@ -104,15 +103,11 @@ const User = () => {
   };
 
   const columns = [
-    { field: 'storeName', headerName: 'Store Name', flex: 1 },
-    { field: 'storeCode', headerName: 'Store Code', flex: 1 },
-    { field: 'storeCountry', headerName: 'Store Country', flex: 1 },
-    { field: 'storeRegion', headerName: 'Store Region', flex: 1 },
-    { field: 'storeCity', headerName: 'Store City', flex: 1 },
-    { field: 'storePhone', headerName: 'Store Phone', flex: 1 },
-    { field: 'storeEmail', headerName: 'Store Email', flex: 1 },
-    { field: 'epaperCount', headerName: 'Linked Epaper', flex: 1 },
-    { field: 'gatewayCount', headerName: 'Linked Gateway', flex: 1 },
+    { field: 'userFirstName', headerName: 'User First Name', flex: 1 },
+    { field: 'userLastName', headerName: 'User Last Name', flex: 1 },
+    { field: 'userEmail', headerName: 'User Email', flex: 1 },
+    { field: 'userMobile', headerName: 'User Mobile', flex: 1 },
+    { field: 'userRoles', headerName: 'User Role', flex: 1 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -139,7 +134,7 @@ const User = () => {
           </Typography>
           <Divider />
           <div style={{ height: 'auto', width: '100%' }}>
-            <Button onClick={() => openDialog(null)} startIcon={<Add />} className="lowercaseText" variant="contained" color="error" sx={{ marginY: 3 }}>Add New Store</Button>
+            <Button onClick={() => openDialog(null)} startIcon={<Add />} className="lowercaseText" variant="contained" color="error" sx={{ marginY: 3 }}>Add New User</Button>
             <DataGrid rows={rows} columns={columns} initialState={{
               pagination: { paginationModel: { pageSize: 50 } },
             }}
@@ -152,7 +147,7 @@ const User = () => {
       </Card>
 
       <Dialog open={isDialogOpen} onClose={closeDialog}>
-        <DialogTitle>{selectedRow ? 'Edit Store' : 'Add New Store'}</DialogTitle>
+        <DialogTitle>{selectedRow ? 'Edit User' : 'Add New User'}</DialogTitle>
         <DialogContent>
           {/* {Object.keys(formData).map((field) => (
            <TextField id="outlined-basic" variant="outlined"   key={field} fullWidth label={field} name={field} 
@@ -162,85 +157,65 @@ const User = () => {
           />
         ))} */}
           <TextField
-            name="storeName"
-            label="Store Name"
-            value={formData.storeName || ''}
+            name="userFirstName"
+            label="User First Name"
+            value={formData.userFirstName || ''}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
           <TextField
-            name="storeCode"
-            label="Store Code"
-            value={formData.storeCode || ''}
+            name="userLastName"
+            label="User Last Name"
+            value={formData.userLastName || ''}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
           <TextField
-            name="storeCountry"
-            label="Store Country"
-            value={formData.storeCountry || ''}
+            name="userEmail"
+            label="User Email"
+            value={formData.userEmail || ''}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
           <TextField
-            name="organizationPhone"
-            label="Organization Phone"
-            value={formData.organizationPhone || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            name="storeRegion"
-            label="Store Region"
-            value={formData.storeRegion || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            name="storeCity"
-            label="Store City"
-            value={formData.storeCity || ''}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            name="storePhone"
-            label="Store Phone"
-            value={formData.storePhone || ''}
+            name="userPass"
+            label="User Pass"
+            value={formData.userPass || ''}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
           <TextField
-            name="storeEmail"
-            label="Store Email"
-            value={formData.storeEmail || ''}
+            name="userMobile"
+            label="User Mobile"
+            value={formData.userMobile || ''}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
           <TextField
-            name="epaperCount"
-            label="Total Linked Epaper"
-            value={formData.epaperCount || ''}
+            name="userRoles"
+            label="User Roles"
+            value={formData.userRoles || ''}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
-
           <TextField
-            name="gatewayCount"
-            label="Total Linked Gateway"
-            value={formData.gatewayCount || ''}
+            name="isActive"
+            label="User Active"
+            value={formData.isActive || ''}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            name="isVerified"
+            label="User Verified"
+            value={formData.isVerified || ''}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -257,7 +232,7 @@ const User = () => {
       <Dialog open={isDeleteDialogOpen} onClose={closeDeleteDialog}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
-          Are you sure you want to delete this store?
+          Are you sure you want to delete this User?
         </DialogContent>
         <DialogActions>
           <Button onClick={closeDeleteDialog} color="primary">

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import {Dashboard, CorporateFare, Storefront, CalendarViewMonth, SelectAll, ViewInAr, LocalFlorist, 
-    PeopleAlt, ManageAccounts, Handyman
+import {
+  Dashboard, CorporateFare, Storefront, CalendarViewMonth, ViewInAr, LocalFlorist,
+  PeopleAlt, ManageAccounts, Handyman, Aod, TabUnselected
 } from '@mui/icons-material';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -20,56 +21,61 @@ const Main = ({ children }) => {
 
   const menuItem = [
     {
-        path: "/",
-        name: "Dashboard",
-        icon: <Dashboard />
+      path: "/",
+      name: "Dashboard",
+      icon: <Dashboard />
     },
     {
-        path: "/organization",
-        name: "Organization",
-        icon: <CorporateFare />
+      path: "/epaper",
+      name: "Epaper",
+      icon: <Aod />
     },
     {
-        path: "/store",
-        name: "Store",
-        icon: <Storefront />
+      path: "/template",
+      name: "Templates",
+      icon: <LocalFlorist />
     },
     {
-        path: "/rack",
-        name: "Rack",
-        icon: <CalendarViewMonth />
+      path: "/product",
+      name: "Product",
+      icon: <ViewInAr />
     },
     {
-        path: "/area",
-        name: "Area",
-        icon: <SelectAll />
+      path: "/rack",
+      name: "Rack",
+      icon: <CalendarViewMonth />
     },
     {
-        path: "/template",
-        name: "Templates",
-        icon: <LocalFlorist />
+      path: "/area",
+      name: "Area",
+      icon: <TabUnselected />
     },
     {
-        path: "/product",
-        name: "Product",
-        icon: <ViewInAr />
+      path: "/store",
+      name: "Store",
+      icon: <Storefront />
     },
     {
-        path: "/user",
-        name: "User",
-        icon: <PeopleAlt />
+      path: "/organization",
+      name: "Organization",
+      icon: <CorporateFare />
     },
     {
-        path: "/role",
-        name: "User Role",
-        icon: <ManageAccounts />
+      path: "/user",
+      name: "User",
+      icon: <PeopleAlt />
     },
     {
-        path: "/setting",
-        name: "Setting",
-        icon: <Handyman />
+      path: "/role",
+      name: "User Role",
+      icon: <ManageAccounts />
+    },
+    {
+      path: "/setting",
+      name: "Setting",
+      icon: <Handyman />
     }
-]
+  ]
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -78,11 +84,11 @@ const Main = ({ children }) => {
   return (
     <>
       <Header handleLogout={handleLogout} />
-      <Box sx={{ display: 'flex', backgroundColor: '#f1f1f1', height: '100vh', overflow: 'auto', m: -1 }}> 
-      <Sidebar open={open} handleDrawerToggle={handleDrawerToggle} menuItem={menuItem} />
-      <Box component="main" sx={{ flexGrow: 1, p: 5, mt: 10 }}>
-        {children}
-      </Box>
+      <Box sx={{ display: 'flex', backgroundColor: '#f1f1f1', height: '100vh', overflow: 'auto', m: -1 }}>
+        <Sidebar open={open} handleDrawerToggle={handleDrawerToggle} menuItem={menuItem} />
+        <Box component="main" sx={{ flexGrow: 1, p: 5, mt: 10 }}>
+          {children}
+        </Box>
       </Box>
     </>
   );

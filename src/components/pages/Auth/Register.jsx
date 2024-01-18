@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,17 +9,18 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { useTheme, createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Divider, Stack, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://flixscan.com/">
+      <Link color="inherit" href="https://flixscan.de/">
         Flixscan
       </Link>{' '}
       {new Date().getFullYear()}
@@ -28,18 +29,31 @@ function Copyright(props) {
   );
 }
 
-
 const defaultTheme = createTheme();
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const Register = () => {
-  const theme = useTheme();
+  // 
+  const [formData, setFormData] = useState({});
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log(data.get('email'))
-    };
- 
+  const handleSubmit = async () => {
+    // event.preventDefault();
+    // const data = new FormData(event.currentTarget);
+    // console.log(data.get('userFirstName'))
+
+    console.log(formData);
+    try {
+      const response = await axios.post(`${apiUrl}/users/`, formData);
+      if(response === 200){
+        console.log("Success");
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -56,24 +70,26 @@ const Register = () => {
           <Card sx={{ minWidth: 375 }}>
             <CardContent>
               <Stack alignItems="center" justifyContent="center" spacing={3}>
-              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-               </Avatar>
-               <Typography component="h1" variant="h5">
-                 Sign up
-               </Typography>
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Sign up
+                </Typography>
                 <Typography variant="caption" fontSize="16px" textAlign={'center'}>
                   Enter your credentials to continue
                 </Typography>
               </Stack>
-              <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+              <Box  sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       autoComplete="given-name"
-                      name="firstName"
+                      name="userFirstName"
+                      value={formData.userFirstName || ''}
+                      onChange={handleChange}
                       required
                       fullWidth
-                      id="firstName"
+                      id="userFirstName"
                       label="First Name"
                       autoFocus
                     />
@@ -82,9 +98,10 @@ const Register = () => {
                     <TextField
                       required
                       fullWidth
-                      id="lastName"
+                      name="userLastName"
                       label="Last Name"
-                      name="lastName"
+                      value={formData.userLastName || ''}
+                      onChange={handleChange}
                       autoComplete="family-name"
                     />
                   </Grid>
@@ -92,9 +109,11 @@ const Register = () => {
                     <TextField
                       required
                       fullWidth
-                      id="email"
+                      name="userEmail"
+                      value={formData.userEmail || ''}
+                      id="userEmail"
                       label="Email Address"
-                      name="email"
+                      onChange={handleChange}
                       autoComplete="email"
                     />
                   </Grid>
@@ -102,22 +121,23 @@ const Register = () => {
                     <TextField
                       required
                       fullWidth
-                      name="password"
+                      name="userPass"
+                      value={formData.userPass || ''}
+                      onChange={handleChange}
                       label="Password"
                       type="password"
-                      id="password"
+                      id="userPass"
                       autoComplete="new-password"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <FormControlLabel
-                      control={<Checkbox value="allowExtraEmails" color="primary" />}
+                      control={<Checkbox name="conditonAccept" value="true" />}
                       label="Agree with Terms & Condition."
                     />
                   </Grid>
                 </Grid>
-                <Button
-                  type="submit"
+                <Button onClick={handleSubmit}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
